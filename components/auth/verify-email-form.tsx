@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { newUserVerification } from '@/server/actions/token';
 import { CheckCircle2, CircleMinus } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function VerifyEmailForm() {
   const params = useSearchParams();
@@ -22,20 +23,24 @@ export default function VerifyEmailForm() {
   const router = useRouter();
 
   const handleVerifyEmail = async () => {
-    if (success || error) return;
     if (!token) {
       setError('Invalid token');
       return;
     }
-    newUserVerification(token).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      }
+    try {
+      const data = await newUserVerification(token);
       if (data.success) {
         setSuccess(data.success.message);
-        router.push('/auth/signin');
+        toast.success(data.success.message);
+        setTimeout(() => {
+          router.push('/auth/signin');
+        }, 3000);
+      } else if (data.error) {
+        setError(data.error || 'Something went wrong');
       }
-    });
+    } catch (err) {
+      setError('An error occurred while verifying the token');
+    }
   };
 
   useEffect(() => {
@@ -46,27 +51,37 @@ export default function VerifyEmailForm() {
 
   return (
     <div>
-      {!success && !error ? (
+      {success ? (
         <Card>
           <CardHeader>
-            <CardTitle>Account confirmation</CardTitle>
+            <CardTitle>Email Verified</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <p>Your email address was successfully verified</p>
+              <p>You will be redirected to the sign-in page in a few seconds</p>
             </div>
           </CardContent>
         </Card>
-      ) : null}
-
-      {error && (
-        <div className="bg-destructive/25 flex items-center my-2 gap-2 text-sm text-secondary-foreground p-3 rounded-md">
-          <CircleMinus className="w-4 h-4" />
-          <p>{error}</p>
-          <Button onClick={() => router.push('/auth/signin')} asChild>
-            Back to Sign In
-          </Button>
-        </div>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Something went wrong </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p>
+                <span className="font-bold">Error:</span> {error}
+              </p>
+              <Button
+                onClick={() => router.push('/auth/signin')}
+                className="w-full"
+              >
+                Back to Sign In
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

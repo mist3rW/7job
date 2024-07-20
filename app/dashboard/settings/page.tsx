@@ -6,7 +6,7 @@ import Nav from '@/components/navigation/nav';
 export default async function SettingsPage() {
   const session = await auth();
   if (!session) {
-    redirect('/auth/signin');
+    redirect('/auth/signin?callbackUrl=/dashboard/settings');
   }
   if (session) {
     return (

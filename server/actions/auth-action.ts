@@ -41,6 +41,7 @@ export const signupUser = actionClient
       if (existingUser) {
         if (!existingUser.emailVerified) {
           const activation_token = await createEmailVerificationToken(email);
+
           if ('email' && 'token' in activation_token) {
             await sendVerificationEmail(
               activation_token.email,
@@ -68,10 +69,9 @@ export const signupUser = actionClient
           password: hashedPassword,
         },
       });
-      // Generate email verification token
+
       const verificationToken = await createEmailVerificationToken(email);
 
-      // Send verification email
       if ('email' && 'token' in verificationToken) {
         await sendVerificationEmail(
           verificationToken.email,
@@ -108,6 +108,15 @@ export const signinUser = actionClient
           },
         };
       }
+
+      if (existingUser && existingUser.image && !existingUser.password) {
+        return {
+          error: {
+            message: `Account exists. Please use your original sign-in method. `,
+          },
+        };
+      }
+
       if (!existingUser.emailVerified) {
         const verificationToken = await createEmailVerificationToken(
           existingUser.email
@@ -209,6 +218,11 @@ export const signinUser = actionClient
           }
           case 'AccessDenied': {
             return { error: error.message };
+          }
+          case 'OAuthAccountNotLinked': {
+            return {
+              error: `Account with ${email} exists. Please use your original sign-in method. `,
+            };
           }
           case 'OAuthSignInError':
             return { error: error.message };

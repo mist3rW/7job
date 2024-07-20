@@ -6,11 +6,7 @@ import { signinSchema } from '@/types/auth-schema';
 import bcrypt from 'bcryptjs';
 
 import prisma from './db';
-
-import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
-import LineProvider from 'next-auth/providers/line';
-import DiscordProvider from 'next-auth/providers/discord';
 import GitHubProvider from 'next-auth/providers/github';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -61,18 +57,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true,
     }),
     GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-      allowDangerousEmailAccountLinking: true,
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
-
     Credentials({
       authorize: async (credentials) => {
         const validateFields = signinSchema.safeParse(credentials);
-
         if (validateFields.success) {
           const { email, password } = validateFields.data;
           const user = await prisma.user.findFirst({

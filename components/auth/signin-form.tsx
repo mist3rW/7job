@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AuthCard from './auth-card';
 import { Button } from '@/components/ui/button';
 import {
@@ -31,12 +31,16 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import FormSuccess from './form-success';
 import FormError from './form-error';
+import { useSearchParams } from 'next/navigation';
 
 export default function SigninForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const params = useSearchParams();
+  const getError = params.get('error');
+  const errorToastPop = useRef(false);
 
   const form = useForm<TSigninSchema>({
     resolver: zodResolver(signinSchema),
@@ -45,9 +49,19 @@ export default function SigninForm() {
       password: '',
     },
   });
+  const errorMessage =
+    getError && (next_auth_errors[getError] ?? next_auth_errors.default);
+
+  useEffect(() => {
+    if (errorMessage && !errorToastPop.current) {
+      toast.error(errorMessage);
+      errorToastPop.current = true;
+    }
+  }, [errorMessage]);
 
   const { execute, status } = useAction(signinUser, {
     onSuccess({ data }) {
+      console.log('data', data);
       if (typeof data?.error === 'string') {
         setError(data.error);
         setSuccess('');
@@ -179,3 +193,18 @@ export default function SigninForm() {
     </AuthCard>
   );
 }
+
+const next_auth_errors: any = {
+  Signin: 'Try signing with a different account.',
+  OAuthSignin: 'Try signing with a different account.',
+  OAuthCallback: 'Try signing with a different account.',
+  OAuthCreateAccount: 'Try signing with a different account.',
+  EmailCreateAccount: 'Try signing with a different account.',
+  Callback: 'Try signing with a different account.',
+  OAuthAccountNotLinked:
+    'Account exists. Please use your original sign-in method.',
+  EmailSignin: 'Check your email address.',
+  CredentialsSignin:
+    'Sign in failed. Check the details you provided are correct.',
+  default: 'Unable to sign in.',
+};
