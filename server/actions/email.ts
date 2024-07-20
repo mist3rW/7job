@@ -9,7 +9,7 @@ const domain = getBaseURL();
 export async function sendVerificationEmail(email: string, token: string) {
   const verificationLink = `${domain}/auth/verify-email?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: 'no-reply@7auth.nuttanan.com',
     to: email,
     subject: '7authOTP - Activate your account',
     html: `
@@ -24,7 +24,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 export async function sendResetPasswordEmail(email: string, token: string) {
   const resetLink = `${domain}/auth/reset-password?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: 'no-reply@7auth.nuttanan.com',
     to: email,
     subject: '7authOTP - Reset your password',
     html: `
@@ -38,7 +38,7 @@ export async function sendResetPasswordEmail(email: string, token: string) {
 
 export async function sendTwoFactorCodeEmail(email: string, token: string) {
   const { data, error } = await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: 'no-reply@7auth.nuttanan.com',
     to: email,
     subject: '7authOTP - Two-factor authentication code',
     html: `

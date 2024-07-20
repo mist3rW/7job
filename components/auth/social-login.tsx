@@ -3,13 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
 import { FcGoogle } from 'react-icons/fc';
-import {
-  FaDiscord,
-  FaFacebook,
-  FaGithub,
-  FaGoogle,
-  FaLine,
-} from 'react-icons/fa';
+import { FaDiscord, FaFacebook, FaGithub, FaLine } from 'react-icons/fa';
 
 export default function SocialLogin() {
   return (
@@ -44,6 +38,45 @@ export default function SocialLogin() {
       >
         <FaGithub size={24} className="w-1/4 ml-8" />
         <p className="text-left  w-full">Continue with Github</p>
+      </Button>
+      <Button
+        variant={'outline'}
+        className="flex gap-4 w-full"
+        onClick={() =>
+          signIn('line', {
+            redirect: false,
+            callbackUrl: '/',
+          })
+        }
+      >
+        <FaLine size={24} className="w-1/4 ml-8" />
+        <p className="text-left  w-full">Continue with Line</p>
+      </Button>
+      <Button
+        variant={'outline'}
+        className="flex gap-4 w-full"
+        onClick={() =>
+          signIn('facebook', {
+            redirect: false,
+            callbackUrl: '/',
+          })
+        }
+      >
+        <FaFacebook size={24} className="w-1/4 ml-8" />
+        <p className="text-left  w-full">Continue with Facebook</p>
+      </Button>
+      <Button
+        variant={'outline'}
+        className="flex gap-4 w-full"
+        onClick={() =>
+          signIn('discord', {
+            redirect: false,
+            callbackUrl: '/',
+          })
+        }
+      >
+        <FaDiscord size={24} className="w-1/4 ml-8" />
+        <p className="text-left  w-full">Continue with Discord</p>
       </Button>
     </div>
   );
