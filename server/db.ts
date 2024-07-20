@@ -26,6 +26,17 @@ declare global {
 
 // dotenv.config();
 // neonConfig.webSocketConstructor = ws;
+
+// ###
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
+//////
+
 const connectionString = `${process.env.DATABASE_URL}`;
 
 const pool = new Pool({ connectionString });
