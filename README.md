@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
 
-## Getting Started
+7authOTP is a comprehensive authentication module designed for modern web applications. It provides a robust system for user management, including sign-in with credentials or providers, email verification, password management, and two-factor authentication (2FA) using one-time passwords (OTPs).
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Sign In with Credentials and Providers**: Users can sign in using email and password, Google, or GitHub.
+- **Email Verification**: After signing up, users receive a token via email to verify their account.
+- **Password Management**: Users can update their password through the dashboard settings.
+- **Two-Factor Authentication (2FA)**: Users can enable 2FA, requiring a one-time password sent via email for subsequent logins.
+- **Secure Password Reset**: Users can reset their passwords securely using token-based authentication.
+- **Form Validation**: Client-side form validation using Zod and React Hook Form.
+- **User-friendly Interface**: Modern UI components for a seamless user experience.
+- **Responsive Design**: Ensures compatibility across different devices and screen sizes.
+- **Password Hashing**: Uses bcrypt for secure password storage.
+- **Database Integration**: Utilizes Prisma ORM and PostgreSQL for database operations.
+- **Robust Error Handling**: Provides detailed error messages and handles various edge cases.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Next.js**: A React framework for building server-side rendered and static web applications.
+- **Prisma ORM**: An Object-Relational Mapper for seamless database interactions.
+- **PostgreSQL**: A powerful, open-source relational database.
+- **NextAuth.js**: An authentication library for Next.js applications.
+- **React Hook Form**: A library for managing form state and validation in React applications.
+- **Zod**: A TypeScript-first schema declaration and validation library.
+- **bcrypt**: A library for hashing passwords.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
