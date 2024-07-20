@@ -67,7 +67,8 @@ export default function TwoFactorBtn({
                 Enable 2-Factor Authentication
               </FormLabel>
               <FormDescription>
-                Secure your account with 2-Factor Authentication
+                During your next sign-in, you will be required to enter a
+                verification code that will be sent to your email.
               </FormDescription>
               <FormControl>
                 <Switch
@@ -80,6 +81,7 @@ export default function TwoFactorBtn({
                 />
               </FormControl>
               <FormMessage />
+              {is2FA && <p className="text-sm "></p>}
             </FormItem>
           )}
         />

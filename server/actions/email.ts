@@ -1,10 +1,9 @@
 'use server';
 
-import getBaseURL from '@/lib/base-url';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
-const domain = getBaseURL();
+const domain = process.env.DOMAIN_URL;
 
 export async function sendVerificationEmail(email: string, token: string) {
   const verificationLink = `${domain}/auth/verify-email?token=${token}`;
