@@ -204,6 +204,7 @@ export const signinUser = actionClient
       return { success: { message: 'Signed in successfully' } };
     } catch (error) {
       console.log(error);
+
       if (error instanceof AuthError) {
         switch (error.type) {
           case 'CallbackRouteError': {

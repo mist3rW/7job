@@ -1,12 +1,9 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import Credentials from 'next-auth/providers/credentials';
 import { signinSchema } from '@/types/auth-schema';
 import bcrypt from 'bcryptjs';
 import FacebookProvider from 'next-auth/providers/facebook';
-import DiscordProvider from 'next-auth/providers/discord';
-import LineProvider from 'next-auth/providers/line';
 import prisma from './db';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
@@ -67,14 +64,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
-    }),
-    DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID!,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-    }),
-    LineProvider({
-      clientId: process.env.LINE_CLIENT_ID!,
-      clientSecret: process.env.LINE_CLIENT_SECRET!,
     }),
     Credentials({
       authorize: async (credentials) => {
