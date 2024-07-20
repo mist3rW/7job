@@ -49,25 +49,21 @@ export default function SettingsContent({ session }: SettingsContentProps) {
   const form = useForm<TUserSettingsNewPasswordSchema>({
     resolver: zodResolver(userSettingsNewPasswordSchema),
     defaultValues: {
-      password: undefined,
-      newPassword: undefined,
-      confirmNewPassword: undefined,
+      password: '',
+      newPassword: '',
+      confirmNewPassword: '',
     },
   });
-  console.log('settings session', session);
 
   const { execute, status } = useAction(userSettingsNewPassword, {
-    onSuccess({ data }) {
-      if (typeof data?.error === 'string') {
-        setError(data.error);
-        setSuccess('');
-      } else if (data?.error?.message) {
-        setError(data.error.message);
-        setSuccess('');
-      }
+    onSuccess: ({ data }) => {
       if (data?.success) {
         setSuccess(data.success.message);
         setError('');
+      }
+      if (data?.error) {
+        setError(data.error.message);
+        setSuccess('');
       }
     },
   });
@@ -81,7 +77,9 @@ export default function SettingsContent({ session }: SettingsContentProps) {
       <CardHeader>
         <CardTitle>Account Settings</CardTitle>
         <CardDescription>
-          Update your account settings. You can change your password here.
+          {session.user.isOAuth
+            ? 'You have signed in using OAuth. Therefore, updating your password and enabling two-factor authentication are not available.'
+            : 'Update your account settings. You can change your password here.'}
         </CardDescription>
       </CardHeader>
       <CardContent>

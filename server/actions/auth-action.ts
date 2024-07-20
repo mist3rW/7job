@@ -175,7 +175,7 @@ export const signinUser = actionClient
         } else {
           const token = await createTwoFactorToken(existingUser.email);
           if ('email' && 'token' in token) {
-            // await sendTwoFactorCodeEmail(existingUser.email, token.token);
+            await sendTwoFactorCodeEmail(existingUser.email, token.token);
             return {
               success: {
                 message: 'Please check your email for 2FA code',
@@ -211,6 +211,8 @@ export const signinUser = actionClient
             return { error: error.message };
           }
           case 'OAuthSignInError':
+            return { error: error.message };
+          case 'OAuthCallbackError':
             return { error: error.message };
           default: {
             return {
@@ -312,7 +314,7 @@ export const resetPassword = actionClient
           },
         });
       }
-      console.log('Password reset successfully');
+
       return {
         success: { message: 'Your password has been reset successfully' },
       };

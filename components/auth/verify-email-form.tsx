@@ -28,7 +28,6 @@ export default function VerifyEmailForm() {
       return;
     }
     newUserVerification(token).then((data) => {
-      console.log('newUser: ', data);
       if (data.error) {
         setError(data.error);
       }
@@ -47,20 +46,19 @@ export default function VerifyEmailForm() {
 
   return (
     <div>
-      <p>
-        {!success && !error ? (
-          <Card>
-            <CardHeader>
-              <CardTitle>Account confirmation</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <p>Your email address was successfully verified</p>
-              </div>
-            </CardContent>
-          </Card>
-        ) : null}
-      </p>
+      {!success && !error ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Account confirmation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p>Your email address was successfully verified</p>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
       {error && (
         <div className="bg-destructive/25 flex items-center my-2 gap-2 text-sm text-secondary-foreground p-3 rounded-md">
           <CircleMinus className="w-4 h-4" />

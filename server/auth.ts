@@ -4,16 +4,22 @@ import { PrismaClient } from '@prisma/client';
 import Credentials from 'next-auth/providers/credentials';
 import { signinSchema } from '@/types/auth-schema';
 import bcrypt from 'bcryptjs';
-import Google from 'next-auth/providers/google';
-import Github from 'next-auth/providers/github';
-import { DevBundlerService } from 'next/dist/server/lib/dev-bundler-service';
 
-const prisma = new PrismaClient();
+import prisma from './db';
+
+import FacebookProvider from 'next-auth/providers/facebook';
+import GoogleProvider from 'next-auth/providers/google';
+import LineProvider from 'next-auth/providers/line';
+import DiscordProvider from 'next-auth/providers/discord';
+import GitHubProvider from 'next-auth/providers/github';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
+  pages: {
+    signIn: '/auth/signin',
+  },
   callbacks: {
     async jwt({ token }) {
       if (!token.sub) return token;
@@ -52,16 +58,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
     }),
-    Github({
+    GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
+
     Credentials({
       authorize: async (credentials) => {
         const validateFields = signinSchema.safeParse(credentials);

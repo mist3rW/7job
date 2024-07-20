@@ -11,7 +11,7 @@ export default function Page() {
         className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
         alt="background image"
       />
-      <div className="flex justify-start items-center lg:ml-8">
+      <div className="flex justify-start items-center md:ml-24">
         <div className="w-[400px]">
           <SignupForm />
         </div>

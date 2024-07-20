@@ -64,6 +64,9 @@ export default function SigninForm() {
         setShowTwoFactor(true);
       }
     },
+    onError({ error }) {
+      console.log('error', error);
+    },
   });
 
   const onSubmit = (values: TSigninSchema) => {

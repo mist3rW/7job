@@ -45,17 +45,14 @@ export default function ResetPasswordForm() {
   });
 
   const { execute, status } = useAction(resetPassword, {
-    onSuccess({ data }) {
-      if (typeof data?.error === 'string') {
-        setError(data.error);
-        setSuccess('');
-      } else if (data?.error?.message) {
-        setError(data.error.message);
-        setSuccess('');
-      }
+    onSuccess: ({ data }) => {
       if (data?.success) {
         setSuccess(data.success.message);
         setError('');
+      }
+      if (data?.error) {
+        setError(data.error.message);
+        setSuccess('');
       }
     },
   });

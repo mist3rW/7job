@@ -19,8 +19,6 @@ import { signupSchema, TSignupSchema } from '@/types/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupUser } from '@/server/actions/auth-action';
 import { useAction } from 'next-safe-action/hooks';
-import { toast } from 'sonner';
-import SocialLogin from './social-login';
 import { CheckCircle2, CircleMinus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,17 +36,14 @@ export default function SignupForm() {
   });
 
   const { execute, status } = useAction(signupUser, {
-    onSuccess({ data }) {
-      if (typeof data?.error === 'string') {
-        setError(data.error);
-        setSuccess('');
-      } else if (data?.error?.message) {
-        setError(data.error.message);
-        setSuccess('');
-      }
+    onSuccess: ({ data }) => {
       if (data?.success) {
         setSuccess(data.success.message);
         setError('');
+      }
+      if (data?.error) {
+        setError(data.error.message);
+        setSuccess('');
       }
     },
   });
@@ -177,7 +172,7 @@ export default function SignupForm() {
             )}
             disabled={status === 'executing'}
           >
-            Sign up
+            Sign Up
           </Button>
         </form>
       </Form>

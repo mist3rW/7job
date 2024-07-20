@@ -3,7 +3,13 @@
 import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
 import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
+import {
+  FaDiscord,
+  FaFacebook,
+  FaGithub,
+  FaGoogle,
+  FaLine,
+} from 'react-icons/fa';
 
 export default function SocialLogin() {
   return (
@@ -23,8 +29,8 @@ export default function SocialLogin() {
           })
         }
       >
-        <FcGoogle size={24} />
-        <p>Continue with Google</p>
+        <FcGoogle size={24} className="w-1/4 ml-8" color="#4285F4" />
+        <p className="text-left  w-full">Continue with Google</p>
       </Button>
       <Button
         variant={'outline'}
@@ -36,8 +42,8 @@ export default function SocialLogin() {
           })
         }
       >
-        <FaGithub size={24} />
-        <p>Continue with Github</p>
+        <FaGithub size={24} className="w-1/4 ml-8" />
+        <p className="text-left  w-full">Continue with Github</p>
       </Button>
     </div>
   );

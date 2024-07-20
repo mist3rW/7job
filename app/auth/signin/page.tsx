@@ -12,7 +12,7 @@ export default function Page() {
         alt="background image"
       />
       <div></div>
-      <div className="flex justify-end items-center mr-8">
+      <div className="flex justify-end items-center md:mr-24">
         <div className="w-[400px]">
           <SigninForm />
         </div>
