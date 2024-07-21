@@ -118,6 +118,17 @@ export const signinUser = actionClient
       }
 
       if (!existingUser.emailVerified) {
+        const isPasswordValid = await bcrypt.compare(
+          password,
+          existingUser.password!
+        );
+        if (!isPasswordValid) {
+          return {
+            error: {
+              message: 'Invalid credentials',
+            },
+          };
+        }
         const verificationToken = await createEmailVerificationToken(
           existingUser.email
         );

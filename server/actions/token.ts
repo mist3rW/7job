@@ -61,6 +61,7 @@ export const createEmailVerificationToken = async (email: string) => {
 };
 
 export const newUserVerification = async (token: string) => {
+  console.log('Action Triggered');
   try {
     const existingToken = await fetchVerificationTokenByToken(token);
     if (!existingToken) {
@@ -98,14 +99,11 @@ export const newUserVerification = async (token: string) => {
       },
     });
     return {
-      success: {
-        data: existingUser,
-        message: 'Email verified successfully',
-      },
+      success: 'Email verified successfully',
     };
   } catch (error) {
     console.error(error);
-    return { error: null };
+    return { error: 'An error occurred while processing your request' };
   }
 };
 
