@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '../ui/button';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { newUserVerification } from '@/server/actions/token';
 
 import { toast } from 'sonner';
@@ -78,7 +78,6 @@ export default function VerifyEmailForm() {
           <CardContent>
             <div className="space-y-4">
               <p>Your email address was successfully verified</p>
-              <p>You will be redirected to the sign-in page in a few seconds</p>
               <Button
                 onClick={() => router.push('/auth/signin')}
                 className="w-full"
