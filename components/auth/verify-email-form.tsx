@@ -35,7 +35,8 @@ export default function VerifyEmailForm() {
         setTimeout(() => {
           router.push('/auth/signin');
         }, 3000);
-      } else if (data.error) {
+      }
+      if (data.error) {
         setError(data.error || 'Something went wrong');
       }
     } catch (err) {
