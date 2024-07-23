@@ -1,7 +1,9 @@
+'use client';
 import Image from 'next/image';
 import { Banknote, Bookmark, Briefcase, MapPinned } from 'lucide-react';
 import { Job } from '@prisma/client';
 import { cn, daysAgo, formatSalary } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 type JobListItemProps = {
   job: Job;
@@ -25,6 +27,25 @@ export default function JobListItem({
     type,
     createdAt,
   } = job;
+
+  const useViewport = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 640);
+      };
+
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return isMobile;
+  };
+
+  const isMobile = useViewport();
+  const href = isMobile ? `/jobs/${slug}` : `#${slug}`;
   return (
     <div
       className={cn(
@@ -33,7 +54,7 @@ export default function JobListItem({
       )}
       onClick={onClick}
     >
-      <a href={`#${slug}`} className="cursor-pointer">
+      <a href={href} className="cursor-pointer">
         <div className="flex items-center justify-between">
           <Image
             src={companyLogo!}

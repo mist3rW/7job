@@ -1,15 +1,20 @@
 'use client';
+
 import { Job } from '@prisma/client';
 import JobItemContent from './job-item-content';
 import JobListItem from './job-list-item';
-import { useState } from 'react';
+
+import { useJobStore } from '@/lib/store';
 
 type JobResultsProps = {
   jobs: Job[];
 };
 
 export default function JobResults({ jobs }: JobResultsProps) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const { activeJobId, setActiveJobId } = useJobStore();
+
+  const activeJob = jobs.find((job) => job.id === activeJobId);
+
   return (
     <section className="flex flex-col md:flex-row gap-4">
       <div className="w-full md:w-1/3 space-y-4">
@@ -17,13 +22,15 @@ export default function JobResults({ jobs }: JobResultsProps) {
           <JobListItem
             key={job.id}
             job={job}
-            isActive={job.id === activeId}
-            onClick={() => setActiveId(job.id)}
+            isActive={job.id === activeJobId}
+            onClick={() => setActiveJobId(job.id)}
           />
         ))}
       </div>
       <div className="w-2/3">
-        <JobItemContent />
+        <div className="hidden md:flex items-center justify-center sticky top-0">
+          <JobItemContent job={activeJob} />
+        </div>
       </div>
     </section>
   );

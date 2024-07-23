@@ -1,62 +1,81 @@
-import { Banknote, Briefcase, Clock, Globe2, MapPinned } from 'lucide-react';
+import {
+  Banknote,
+  Briefcase,
+  Clock,
+  ExternalLink,
+  Globe2,
+  MapPinned,
+} from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui/button';
+import { Job } from '@prisma/client';
+import { daysAgo, formatSalary } from '@/lib/utils';
+import { Separator } from '../ui/separator';
+import { notFound } from 'next/navigation';
 
-export default function JobItemContent() {
+type JobItemContentProps = {
+  job: Job | undefined;
+};
+
+export default function JobItemContent({ job }: JobItemContentProps) {
+  if (!job) return <EmptyJobContent />;
+
+  const applyLink = job?.applyEmail
+    ? `mailto:${job.applyEmail}`
+    : job?.applyUrl;
+
+  if (!applyLink) {
+    console.error(`Job has no application link`);
+    notFound();
+  }
+
   return (
-    <section className="my-4 p-4 sticky top-0 space-y-4 ">
-      <h1 className="font-bold text-2xl">
-        Marketing Manager - Medical Channel
-      </h1>
-      <p>FrieslandCampnia(Thailand) PCL.</p>
+    <section className="my-4 p-4 space-y-4 w-full ">
+      <h1 className="font-bold text-2xl">{job.title}</h1>
+      <p>{job.companyName}</p>
       <div>
         <p className="flex items-center gap-1.5 ">
           <Briefcase size={16} className="shrink-0" />
-          Intership
+          {job.type}
         </p>
         <p className="flex items-center gap-1.5 ">
           <MapPinned size={16} className="shrink-0" />
-          Bangkok
+          {job.location}
         </p>
         <p className="flex items-center gap-1.5 ">
           <Banknote size={16} className="shrink-0" />
-          30,000 baht
+          {formatSalary(job.salary)}
         </p>
         <p className="flex items-center gap-1.5 mt-4">
           <Clock size={16} className="shrink-0" />
-          Posted: 4d ago
+          Posted: {daysAgo(job.createdAt)}
         </p>
       </div>
       <div className="flex gap-2">
-        <Button>Apply Now</Button>
+        <Button asChild>
+          <a href={applyLink} target="_blank" className="w-40 md:w-fit">
+            Apply Now
+          </a>
+        </Button>
         <Button className="bg-zinc-400">Save</Button>
       </div>
+      <Separator />
       <div>
         <h2 className="font-semibold text-lg">Job Description</h2>
-        <p>
-          Job Description Create Medical Marketing Strategy that align with
-          Brand Strategy to achieve OMG growth agenda. Provide clear guidance
-          and strong leadership to drive best in class medical marketing way of
-          work across organization and partners. Ensuring a strong collaboration
-          with regulatory team, compliance and other function at all levels.
-          Developing and enhancing medical marketing plans to upgrade nutrition
-          and scientific creditability with education platforms and partnership
-          via both offline and online channels Monitoring, tracking and
-          assessing the effectiveness of Medical Marketing activities with
-          agility to ensure the best performance Qualifications Experience in
-          Medical/Marketing/ Excellence team at least 5 years and have exposure
-          to Pharmaceutical/Nutrition industry Understand nutrition market
-          conditions, products approaches, to ensure that all activities reflect
-          the actual needs of the targeted audiences Understand customers, the
-          competition, WHO and Regulatory framework Strategically drive OMG
-          growth with experience of working directly with customers/HCPs,
-          opinion leaders, technical experts and professional staff as well as
-          broad exposure to the healthcare industry and its competitors Through
-          understanding of marketplace dynamics including healthcare customer
-          base; and comparative strengths and weaknesses of competitor’s
-          product. Demonstrated ability to effectively communicate to a diverse
-          audience, at multiple levels within the company
+        <div dangerouslySetInnerHTML={{ __html: job.description }}></div>
+      </div>
+    </section>
+  );
+}
+
+function EmptyJobContent() {
+  return (
+    <section className="hidden md:flex flex-col my-4 p-4  space-y-4 ">
+      <div className="flex flex-col justify-center w-full mx-auto items-center">
+        <p className="text-bold text-2xl">
+          What kind of jobs are you looking for?
         </p>
+        <p>Start by searching for any job, company, or location.</p>
       </div>
     </section>
   );
