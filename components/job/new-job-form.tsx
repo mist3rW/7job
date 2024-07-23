@@ -201,7 +201,6 @@ export default function NewJobForm() {
                   <FormControl>
                     <div className="flex gap-2 items-center w-full">
                       <MapPin size={32} className="p-2 bg-muted rounded-md" />
-
                       {form.watch('location') ? (
                         <div className="flex items-center gap-1 pl-4 ">
                           <span className="text-base">

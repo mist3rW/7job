@@ -11,7 +11,6 @@ export default async function SettingsPage() {
   if (session) {
     return (
       <div>
-        <Nav />
         <div className="w-full p-4 max-w-[1050px] flex justify-center mx-auto">
           <SettingsContent session={session} />
         </div>

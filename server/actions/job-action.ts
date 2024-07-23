@@ -1,8 +1,23 @@
 'use server';
 import { actionClient } from '@/lib/safe-action';
-import { createJobSchema } from '@/types/job-schema';
+import { createJobSchema, jobFilterSchema } from '@/types/job-schema';
 import prisma from '../db';
 import { createSlug } from '@/lib/utils';
+import { redirect } from 'next/navigation';
+
+export const jobFilterAction = actionClient
+  .schema(jobFilterSchema)
+  .action(async ({ parsedInput: values }) => {
+    const { query, type, location } = values;
+
+    const searchQuery = new URLSearchParams({
+      ...(query && { query: query.trim() }),
+      ...(type && { type }),
+      ...(location && { location }),
+    });
+
+    redirect(`/?${searchQuery.toString()}`);
+  });
 
 export const createJobAction = actionClient
   .schema(createJobSchema)
@@ -44,3 +59,19 @@ export const createJobAction = actionClient
       throw new Error('Failed to create job');
     }
   });
+
+export const distinctLocations = async (): Promise<string[]> => {
+  return prisma.job
+    .findMany({
+      where: {
+        approved: true,
+      },
+      select: {
+        location: true,
+      },
+      distinct: ['location'],
+    })
+    .then((locations) =>
+      locations.map(({ location }) => location).filter(Boolean)
+    );
+};

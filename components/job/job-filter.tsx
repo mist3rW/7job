@@ -19,13 +19,37 @@ import {
 } from '@/components/ui/select';
 import { Button } from '../ui/button';
 import { useForm } from 'react-hook-form';
+import { jobFilterSchema, TJobFilterSchema } from '@/types/job-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hooks';
+import { jobFilterAction } from '@/server/actions/job-action';
+import { duration_types } from '@/lib/duration-types';
 
-export default function JobFilter() {
-  const form = useForm();
+import { useEffect, useState } from 'react';
+import LocationInput from '../ui/location-input';
+import { X } from 'lucide-react';
+import LocationSuggestInput from './location-suggest-input';
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+type JobFilterProps = {
+  defaultValues: TJobFilterSchema;
+};
+
+export default function JobFilter({ defaultValues }: JobFilterProps) {
+  const form = useForm<TJobFilterSchema>({
+    resolver: zodResolver(jobFilterSchema),
+    defaultValues: {
+      query: defaultValues.query || '',
+      type: defaultValues.type || '',
+      location: defaultValues.location || '',
+    },
+  });
+
+  const { execute, status } = useAction(jobFilterAction);
+
+  const onSubmit = (values: TJobFilterSchema) => {
+    execute(values);
   };
+
   return (
     <section className="w-full  border rounded-md p-4">
       <Form {...form}>
@@ -35,7 +59,7 @@ export default function JobFilter() {
         >
           <FormField
             control={form.control}
-            name="username"
+            name="query"
             render={({ field }) => (
               <FormItem className="w-full md:w-1/3">
                 <FormLabel>Search</FormLabel>
@@ -48,19 +72,27 @@ export default function JobFilter() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="type"
             render={({ field }) => (
               <FormItem className="w-full md:w-fit">
                 <FormLabel>Type</FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select
+                    onValueChange={(value) =>
+                      field.onChange(value === 'all' ? '' : value)
+                    }
+                    value={field.value || ''}
+                  >
                     <SelectTrigger className="w-full md:w-[180px]">
-                      <SelectValue placeholder="duration" />
+                      <SelectValue placeholder="All duration" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
+                      <SelectItem value="all">All durations</SelectItem>
+                      {duration_types.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -70,12 +102,17 @@ export default function JobFilter() {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="location"
             render={({ field }) => (
               <FormItem className="w-full md:w-1/3">
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder="area district province" {...field} />
+                  <div>
+                    <LocationSuggestInput
+                      onLocationChange={field.onChange}
+                      value={field.value || ''}
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

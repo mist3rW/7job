@@ -32,3 +32,11 @@ export const createJobSchema = z
   });
 
 export type TCreateJobSchema = z.infer<typeof createJobSchema>;
+
+export const jobFilterSchema = z.object({
+  query: z.string().max(100).optional().or(z.literal('')),
+  type: z.string().optional().or(z.literal('')),
+  location: z.string().optional().or(z.literal('')),
+});
+
+export type TJobFilterSchema = z.infer<typeof jobFilterSchema>;

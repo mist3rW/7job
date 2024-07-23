@@ -50,7 +50,7 @@ export default function JobListItem({
     <div
       className={cn(
         'p-4 border rounded-md space-y-2',
-        isActive ? 'bg-[#f4f5f7]' : ''
+        isActive ? 'bg-[#f4f5f7] dark:bg-gray-700' : ''
       )}
       onClick={onClick}
     >

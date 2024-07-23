@@ -2,7 +2,7 @@ import SigninForm from '@/components/auth/signin-form';
 import Image from 'next/image';
 import bgSignin from '@/public/bg-signin.jpg';
 
-export default function Page() {
+export default function SignInPage() {
   return (
     <div className="flex justify-center items-center md:grid grid-cols-2 w-full min-h-screen">
       <Image
