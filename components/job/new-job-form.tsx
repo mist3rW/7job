@@ -42,6 +42,7 @@ import FormError from '../auth/form-error';
 import { useRouter } from 'next/navigation';
 import { stat } from 'fs';
 import Tiptap from './tiptap';
+import { Banknote } from 'lucide-react';
 
 export default function NewJobForm() {
   const [error, setError] = useState<string | undefined>();
@@ -223,7 +224,10 @@ export default function NewJobForm() {
                 <FormItem>
                   <FormLabel>Salary</FormLabel>
                   <FormControl>
-                    <Input {...field} type="number" />
+                    <div className="flex items-center gap-2">
+                      <Banknote size={32} className="p-2 bg-muted rounded-md" />
+                      <Input {...field} type="number" />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

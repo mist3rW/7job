@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import crypto from 'crypto';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,4 +26,17 @@ export function createSlug(jobTitle: string, companyName: string) {
   const slug = `${sanitizedJobTitle}-${sanitizedCompanyName}-${uniqueId}`;
 
   return slug;
+}
+
+export function formatSalary(salary: number) {
+  return new Intl.NumberFormat('th-TH', {
+    currency: 'THB',
+    style: 'currency',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(salary);
+}
+
+export function daysAgo(from: Date) {
+  return formatDistanceToNowStrict(from, { addSuffix: true });
 }
