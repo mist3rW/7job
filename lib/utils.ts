@@ -29,12 +29,13 @@ export function createSlug(jobTitle: string, companyName: string) {
 }
 
 export function formatSalary(salary: number) {
+  const roundedSalary = Math.round(salary / 1000) * 1000;
   return new Intl.NumberFormat('th-TH', {
     currency: 'THB',
     style: 'currency',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(salary);
+  }).format(roundedSalary);
 }
 
 export function daysAgo(from: Date) {

@@ -8,9 +8,10 @@ import { useJobStore } from '@/lib/store';
 
 type JobResultsProps = {
   jobs: Job[];
+  page?: number;
 };
 
-export default function JobResults({ jobs }: JobResultsProps) {
+export default function JobResults({ jobs, page = 1 }: JobResultsProps) {
   const { activeJobId, setActiveJobId } = useJobStore();
 
   const activeJob = jobs.find((job) => job.id === activeJobId);

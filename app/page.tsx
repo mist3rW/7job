@@ -3,6 +3,7 @@ import JobResults from '@/components/job/job-results';
 import Nav from '@/components/navigation/nav';
 import prisma from '@/server/db';
 import { redirect } from 'next/navigation';
+import { faker } from '@faker-js/faker';
 
 export default async function Home() {
   const jobs = await prisma.job.findMany();

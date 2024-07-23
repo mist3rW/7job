@@ -4,5 +4,4 @@ export const duration_types = [
   'Contract',
   'Internship',
   'Temporary',
-  'Volunteer',
 ];

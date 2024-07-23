@@ -55,14 +55,15 @@ export default function JobListItem({
       onClick={onClick}
     >
       <a href={href} className="cursor-pointer">
-        <div className="flex items-center justify-between">
-          <Image
-            src={companyLogo!}
-            alt="company logo"
-            width={64}
-            height={64}
-            className="rounded-full self-center"
-          />
+        <div className="flex items-center justify-between my-4">
+          <div className="relative h-[64px] w-[64px]">
+            <Image
+              src={companyLogo!}
+              alt="company logo"
+              fill
+              className="rounded-full self-center object-cover"
+            />
+          </div>
           <Bookmark />
         </div>
         <p className="font-semibold">{title}</p>

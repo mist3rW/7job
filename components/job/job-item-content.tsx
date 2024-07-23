@@ -51,6 +51,12 @@ export default function JobItemContent({ job }: JobItemContentProps) {
           Posted: {daysAgo(job.createdAt)}
         </p>
       </div>
+      <Separator />
+      <div>
+        <h2 className="font-semibold text-lg">Job Description</h2>
+        <div dangerouslySetInnerHTML={{ __html: job.description }}></div>
+      </div>
+      <Separator />
       <div className="flex gap-2">
         <Button asChild>
           <a href={applyLink} target="_blank" className="w-40 md:w-fit">
@@ -58,11 +64,6 @@ export default function JobItemContent({ job }: JobItemContentProps) {
           </a>
         </Button>
         <Button className="bg-zinc-400">Save</Button>
-      </div>
-      <Separator />
-      <div>
-        <h2 className="font-semibold text-lg">Job Description</h2>
-        <div dangerouslySetInnerHTML={{ __html: job.description }}></div>
       </div>
     </section>
   );
