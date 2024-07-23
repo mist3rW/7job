@@ -41,6 +41,7 @@ import FormSuccess from '../auth/form-success';
 import FormError from '../auth/form-error';
 import { useRouter } from 'next/navigation';
 import { stat } from 'fs';
+import Tiptap from './tiptap';
 
 export default function NewJobForm() {
   const [error, setError] = useState<string | undefined>();
@@ -60,6 +61,7 @@ export default function NewJobForm() {
       location: '',
       companyLogo: '',
     },
+    mode: 'onChange',
   });
 
   const { execute, status } = useAction(createJobAction, {
@@ -208,7 +210,7 @@ export default function NewJobForm() {
                 <FormItem>
                   <FormLabel>Job description</FormLabel>
                   <FormControl>
-                    <Input placeholder="7jobs" {...field} />
+                    <Tiptap value={field.value} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

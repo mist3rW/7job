@@ -12,7 +12,10 @@ export const createJobSchema = z
     ),
     salary: requiredString.regex(/^\d+$/, 'must be a number').max(10),
     companyName: requiredString.max(100),
-    description: requiredString.max(500).max(4000),
+    description: z
+      .string()
+      .min(50, 'Job description must be at least 50 characters long')
+      .max(4000),
     applyUrl: z.string().url().max(150).optional().or(z.literal('')),
     applyEmail: z.string().email().max(100).optional().or(z.literal('')),
     location: requiredString.max(100),
