@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select';
 
 import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
+import { FormState, useForm } from 'react-hook-form';
 import { Label } from '../ui/label';
 import LoadingButton from '../ui/loading-button';
 import { duration_types } from '@/lib/duration-types';
@@ -34,11 +34,19 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { createJobSchema, TCreateJobSchema } from '@/types/job-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hooks';
+import { createJobAction } from '@/server/actions/job-action';
+
+import FormSuccess from '../auth/form-success';
+import FormError from '../auth/form-error';
+import { useRouter } from 'next/navigation';
+import { stat } from 'fs';
 
 export default function NewJobForm() {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [logoUploading, setLogoUploading] = useState(false);
+  const router = useRouter();
   const form = useForm<TCreateJobSchema>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
@@ -54,8 +62,15 @@ export default function NewJobForm() {
     },
   });
 
+  const { execute, status } = useAction(createJobAction, {
+    onSuccess: (data) => {
+      router.push('/job-submitted');
+    },
+  });
+
   const onSubmit = (values: TCreateJobSchema) => {
     console.log(values);
+    execute(values);
   };
   return (
     <Card className="my-10">
@@ -167,6 +182,7 @@ export default function NewJobForm() {
                   <FormControl>
                     <Input placeholder="Logo Image" type="hidden" {...field} />
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -253,9 +269,12 @@ export default function NewJobForm() {
                 />
               </div>
             </div>
+            <FormSuccess message={success} />
+            <FormError message={error} />
             <LoadingButton
               type="submit"
-              loading={form.formState.isSubmitting}
+              loading={status === 'executing'}
+              disabled={status === 'executing'}
               className="w-full"
             >
               Submit
