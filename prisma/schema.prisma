@@ -4,9 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -83,4 +82,20 @@ model TwoFactorToken {
   email   String
   userId  String
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  companyLogo String?
+  companyName String
+  applyUrl    String?
+  applyEmail  String?
+  location    String
+  salary      Int
+  type        String
+  approved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

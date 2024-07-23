@@ -17,6 +17,14 @@ export default async function Nav() {
               <Logo />
             </Link>
           </li>
+          <li>
+            <Link
+              href="/jobs/new"
+              className="bg-primary text-primary-foreground px-4 py-2 rounded-md"
+            >
+              Post a new job
+            </Link>
+          </li>
           {!session ? (
             <li>
               <Button asChild>

@@ -8,8 +8,8 @@ import Nav from '@/components/navigation/nav';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '7Auth',
-  description: 'Secure authentication for your applications',
+  title: '7Jobs',
+  description: '7Jobs is a job board for everyone',
 };
 
 export default function RootLayout({
@@ -26,7 +26,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="">
+          <div className="max-w-5xl m-auto my-10 px-3">
+            <Nav />
             <Toaster />
             {children}
           </div>
