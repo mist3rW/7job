@@ -42,7 +42,8 @@ import FormError from '../auth/form-error';
 import { useRouter } from 'next/navigation';
 import { stat } from 'fs';
 import Tiptap from './tiptap';
-import { Banknote } from 'lucide-react';
+import { Banknote, MapPin, X } from 'lucide-react';
+import LocationInput from '../ui/location-input';
 
 export default function NewJobForm() {
   const [error, setError] = useState<string | undefined>();
@@ -198,7 +199,33 @@ export default function NewJobForm() {
                 <FormItem>
                   <FormLabel>Office location</FormLabel>
                   <FormControl>
-                    <Input {...field} type="text" />
+                    <div className="flex gap-2 items-center w-full">
+                      <MapPin size={32} className="p-2 bg-muted rounded-md" />
+
+                      {form.watch('location') ? (
+                        <div className="flex items-center gap-1 pl-4 ">
+                          <span className="text-base">
+                            {form.watch('location')}
+                          </span>
+                          <button
+                            type="button"
+                            className="bg-red w-6 h-6 bg-destructive rounded-full flex items-center justify-center"
+                            onClick={() => {
+                              form.setValue('location', '', {
+                                shouldValidate: true,
+                              });
+                            }}
+                          >
+                            <X size={16} color="white" />
+                          </button>
+                        </div>
+                      ) : (
+                        <LocationInput
+                          onLocationSelected={field.onChange}
+                          ref={field.ref}
+                        />
+                      )}
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
