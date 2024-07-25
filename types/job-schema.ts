@@ -1,10 +1,6 @@
 import { duration_types } from '@/lib/duration-types';
+import { Job } from '@prisma/client';
 import * as z from 'zod';
-
-export type activeJobIdState = {
-  activeJobId: string | null;
-  setActiveJobId: (id: string) => void;
-};
 
 const requiredString = z.string().min(1, 'Required');
 

@@ -39,5 +39,7 @@ export function formatSalary(salary: number) {
 }
 
 export function daysAgo(from: Date) {
-  return formatDistanceToNowStrict(from, { addSuffix: true });
+  const distance = formatDistanceToNowStrict(from, { addSuffix: true });
+
+  return distance;
 }

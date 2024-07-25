@@ -5,6 +5,7 @@ import { Job } from '@prisma/client';
 import { cn, daysAgo, formatSalary } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { LoadingSpinner } from '../spinner';
+import BookmarkIcon from './bookmark-icon';
 
 type JobListItemProps = {
   job: Job;
@@ -68,6 +69,7 @@ export default function JobListItem({
                   className="rounded-full self-center object-cover"
                 />
               </div>
+              <BookmarkIcon title={title} company={companyName} slug={slug} />
             </div>
             <p className="font-semibold">{title}</p>
             <p className="">{companyName}</p>

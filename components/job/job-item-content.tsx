@@ -17,6 +17,7 @@ import { notFound } from 'next/navigation';
 import JobAnimation from './job-animation';
 import Image from 'next/image';
 import Link from 'next/link';
+import BookmarkIcon from './bookmark-icon';
 
 type JobItemContentProps = {
   job: Job | undefined;
@@ -80,6 +81,11 @@ export default function JobItemContent({ job }: JobItemContentProps) {
             Apply Now
           </a>
         </Button>
+        <BookmarkIcon
+          title={job.title}
+          company={job.companyName}
+          slug={job.slug}
+        />
       </div>
     </section>
   );

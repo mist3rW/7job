@@ -2,8 +2,9 @@ import { auth } from '@/server/auth';
 import UserButton from './user-button';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { LogIn } from 'lucide-react';
+import { ChevronDown, LogIn } from 'lucide-react';
 import Logo from './logo';
+import BookmarkMenu from './bookmark-menu';
 
 export default async function Nav() {
   const session = await auth();
@@ -12,10 +13,13 @@ export default async function Nav() {
     <header className="p-4 ">
       <nav className="">
         <ul className="flex justify-between items-center">
-          <li>
+          <li className="flex items-center">
             <Link href="/">
               <Logo />
             </Link>
+          </li>
+          <li>
+            <BookmarkMenu />
           </li>
 
           {!session ? (
