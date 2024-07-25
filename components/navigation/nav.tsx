@@ -12,18 +12,16 @@ export default async function Nav() {
   return (
     <header className="p-4 ">
       <nav className="">
-        <ul className="flex justify-between items-center">
-          <li className="flex items-center">
-            <Link href="/">
+        <ul className="flex justify-between items-center ">
+          <li className="">
+            <Link href="/" className="">
               <Logo />
             </Link>
           </li>
-          <li>
-            <BookmarkMenu />
-          </li>
 
           {!session ? (
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-1">
+              <BookmarkMenu />
               <Button asChild>
                 <Link
                   href="/jobs/new"
@@ -35,12 +33,13 @@ export default async function Nav() {
               <Button asChild>
                 <Link href="/auth/signin" className="flex gap-2">
                   <LogIn size={16} />
-                  <span>Admin</span>
+                  <span className="hidden md:block">Admin</span>
                 </Link>
               </Button>
             </li>
           ) : (
-            <li className="space-x-4 shrink-0">
+            <li className="space-x-2 shrink-0">
+              <BookmarkMenu />
               <Button asChild>
                 <Link
                   href="/jobs/new"

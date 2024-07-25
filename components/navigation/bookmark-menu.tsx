@@ -20,9 +20,9 @@ export default function BookmarkMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center text-sm tracking-tighter gap-2">
+      <DropdownMenuTrigger className="flex items-center text-sm tracking-tighter gap-1">
         bookmarks
-        <ChevronDown size={10} />
+        <ChevronDown size={14} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-h-96 overflow-auto">
         <DropdownMenuLabel>Saved jobs</DropdownMenuLabel>
