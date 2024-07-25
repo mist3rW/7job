@@ -1,28 +1,87 @@
-## Overview
+# 7job
 
-7authOTP is a comprehensive authentication module designed for modern web applications. It provides a robust system for user management, including sign-in with credentials or providers, email verification, password management, and two-factor authentication (2FA) using one-time passwords (OTPs).
+7job is a job board web application inspired by jobsdb.com. It allows users to post job listings, which are reviewed by an admin before becoming publicly available. The home page features a comprehensive job board where users can view job details, search for jobs, and bookmark jobs for later reference using local storage.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Database Schema](#database-schema)
+- [Admin Dashboard](#admin-dashboard)
 
 ## Features
 
-- **Sign In with Credentials and Providers**: Users can sign in using email and password, Google, or GitHub.
-- **Email Verification**: After signing up, users receive a token via email to verify their account.
-- **Password Management**: Users can update their password through the dashboard settings.
-- **Two-Factor Authentication (2FA)**: Users can enable 2FA, requiring a one-time password sent via email for subsequent logins.
-- **Secure Password Reset**: Users can reset their passwords securely using token-based authentication.
-- **Form Validation**: Client-side form validation using Zod and React Hook Form.
-- **User-friendly Interface**: Modern UI components for a seamless user experience.
-- **Responsive Design**: Ensures compatibility across different devices and screen sizes.
-- **Password Hashing**: Uses bcrypt for secure password storage.
-- **Database Integration**: Utilizes Prisma ORM and PostgreSQL for database operations.
-- **Robust Error Handling**: Provides detailed error messages and handles various edge cases.
+- **Job Listings**: Users can view detailed job listings, including job title, company name and logo, description, salary, location, and job type.
+- **Job Search**: Users can search for jobs by title, type, or location.
+- **Bookmarking**: Users can bookmark jobs for later reference using local storage.
+- **Admin Review**: Admins can review, approve, or delete job postings.
+- **Secure Authentication**: Implemented secure user authentication.
 
-## Technologies Used
+## Tech Stack
 
-- **Next.js**: A React framework for building server-side rendered and static web applications.
-- **Prisma ORM**: An Object-Relational Mapper for seamless database interactions.
-- **PostgreSQL**: A powerful, open-source relational database.
-- **NextAuth.js**: An authentication library for Next.js applications.
-- **React Hook Form**: A library for managing form state and validation in React applications.
-- **Zod**: A TypeScript-first schema declaration and validation library.
-- **bcrypt**: A library for hashing passwords.
-- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **Framework**: Next.js
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **Styling**: Tailwind CSS
+- **Authentication**: NextAuth.js
+- **State Management**: Zustand
+- **Forms**: React Hook Form
+- **Validation**: Zod
+- **Other Libraries**: Framer Motion, clsx, date-fns, bcryptjs, jsonwebtoken, etc.
+
+## Getting Started
+
+To get a local copy up and running, follow these steps:
+
+### Prerequisites
+
+- Node.js
+- PostgreSQL
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/mist3rW/7job.git
+   cd 7job
+   ```
+
+2. Install dependencies:
+
+`npm install`
+
+3. Set up the database:
+
+````npx prisma migrate dev
+npx prisma db seed```
+````
+
+4. Start the development server:
+
+```
+npm run dev
+```
+
+## Environment Variables
+
+Create a .env file in the root directory and add the following environment variables:
+
+```
+DATABASE_URL="your_database_url"
+UPLOADTHING_SECRET="your_uploadthing_secret"
+UPLOADTHING_APP_ID="your_uploadthing_app_id"
+```
+
+## Database Schema
+
+The database schema is defined using Prisma. You can find the schema in prisma/schema.prisma.
+
+## Admin Dashboard
+
+The admin dashboard allows administrators to manage job postings efficiently. Admins can:
+
+- View all job postings.
+- Approve or delete job postings.
