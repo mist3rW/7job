@@ -51,17 +51,20 @@ To get a local copy up and running, follow these steps:
 
 2. Install dependencies:
 
-`npm install`
+```bash
+npm install
+```
 
 3. Set up the database:
 
-````npx prisma migrate dev
-npx prisma db seed```
-````
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
 4. Start the development server:
 
-```
+```bash
 npm run dev
 ```
 
