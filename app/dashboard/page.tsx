@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function DashboardPage() {
-  return <div>XXXX</div>;
+export default async function DashboardPage() {
+  redirect('/dashboard/jobs');
 }

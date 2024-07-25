@@ -209,7 +209,7 @@ export const signinUser = actionClient
       await signIn('credentials', {
         email,
         password,
-        redirectTo: '/',
+        redirectTo: '/dashboard/jobs',
       });
 
       return { success: { message: 'Signed in successfully' } };

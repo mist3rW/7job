@@ -45,8 +45,8 @@ export default function SigninForm() {
   const form = useForm<TSigninSchema>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'demo@7job.com',
+      password: 'demo@7job',
     },
   });
   const errorMessage =
@@ -87,7 +87,7 @@ export default function SigninForm() {
     execute(values);
   };
   return (
-    <AuthCard cardTitle="Sign in" page="signin" showSocial>
+    <AuthCard cardTitle="Sign in" page="signin">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {showTwoFactor && (
@@ -136,6 +136,7 @@ export default function SigninForm() {
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
                       <Input
+                        disabled
                         placeholder="Enter your email"
                         {...field}
                         type="text"
@@ -154,6 +155,7 @@ export default function SigninForm() {
                     <FormControl>
                       <div className="relative">
                         <Input
+                          disabled
                           placeholder="Enter your password"
                           {...field}
                           type={showPassword ? 'text' : 'password'}
@@ -170,11 +172,6 @@ export default function SigninForm() {
                   </FormItem>
                 )}
               />
-              <FormDescription>
-                <Link href="/auth/forgot-password" className="text-blue-500">
-                  Forgot password?
-                </Link>
-              </FormDescription>
             </>
           )}
           {success && <FormSuccess message={success} />}

@@ -3,8 +3,10 @@ import {
   Briefcase,
   Clock,
   ExternalLink,
+  ExternalLinkIcon,
   Globe2,
   MapPinned,
+  MoveLeftIcon,
 } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui/button';
@@ -12,6 +14,9 @@ import { Job } from '@prisma/client';
 import { daysAgo, formatSalary } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { notFound } from 'next/navigation';
+import JobAnimation from './job-animation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 type JobItemContentProps = {
   job: Job | undefined;
@@ -31,6 +36,18 @@ export default function JobItemContent({ job }: JobItemContentProps) {
 
   return (
     <section className="my-4 p-4 space-y-4 w-full ">
+      <div className="flex justify-between">
+        <Image
+          src={job.companyLogo!}
+          alt={job.companyName}
+          width={100}
+          height={100}
+          className="rounded-lg"
+        />
+        <Link href={`/jobs/${job.slug}`}>
+          <ExternalLinkIcon className="bg-primary-foreground" />
+        </Link>
+      </div>
       <h1 className="font-bold text-2xl">{job.title}</h1>
       <p>{job.companyName}</p>
       <div>
@@ -63,7 +80,6 @@ export default function JobItemContent({ job }: JobItemContentProps) {
             Apply Now
           </a>
         </Button>
-        <Button className="bg-zinc-400">Save</Button>
       </div>
     </section>
   );
@@ -71,13 +87,16 @@ export default function JobItemContent({ job }: JobItemContentProps) {
 
 function EmptyJobContent() {
   return (
-    <section className="hidden md:flex flex-col my-4 p-4  space-y-4 ">
-      <div className="flex flex-col justify-center w-full mx-auto items-center">
-        <p className="text-bold text-2xl">
-          What kind of jobs are you looking for?
-        </p>
-        <p>Start by searching for any job, company, or location.</p>
+    <section className="hidden md:flex flex-col my-4 p-4 space-y-4 bg-primary-foreground w-full h-screen rounded-lg">
+      <div className="flex flex-row items-center w-full mx-auto gap-4">
+        <MoveLeftIcon size={64} />
+        <div>
+          <p className="text-bold text-2xl ">Select a job</p>
+          <p>Click on a job to view more details</p>
+        </div>
       </div>
+      <Separator />
+      <JobAnimation />
     </section>
   );
 }

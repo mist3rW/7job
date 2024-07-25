@@ -1,9 +1,6 @@
 import JobFilter from '@/components/job/job-filter';
 import JobResults from '@/components/job/job-results';
-import Nav from '@/components/navigation/nav';
 import prisma from '@/server/db';
-import { redirect } from 'next/navigation';
-import { faker } from '@faker-js/faker';
 import { Prisma } from '@prisma/client';
 import { RESULT_PER_PAGE } from '@/lib/constants';
 
@@ -33,8 +30,6 @@ export default async function Home({ searchParams }: HomeProps) {
     ?.split(' ')
     .filter((word) => word.length > 0)
     .join(' ');
-
-  console.log('queryString', queryString);
 
   const searchFilter: Prisma.JobWhereInput = queryString
     ? {

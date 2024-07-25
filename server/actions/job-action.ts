@@ -1,9 +1,16 @@
 'use server';
 import { actionClient } from '@/lib/safe-action';
-import { createJobSchema, jobFilterSchema } from '@/types/job-schema';
+import {
+  approveDeleteJobSchema,
+  createJobSchema,
+  jobFilterSchema,
+} from '@/types/job-schema';
 import prisma from '../db';
 import { createSlug } from '@/lib/utils';
 import { redirect } from 'next/navigation';
+import { auth } from '../auth';
+import { revalidatePath } from 'next/cache';
+import { utapi } from '@/app/api/uploadthing/core';
 
 export const jobFilterAction = actionClient
   .schema(jobFilterSchema)
@@ -52,7 +59,7 @@ export const createJobAction = actionClient
           companyLogo,
         },
       });
-
+      revalidatePath('/dashboard/jobs');
       return { success: 'Job submitted successfully' };
     } catch (error) {
       console.error(error);
@@ -75,3 +82,77 @@ export const distinctLocations = async (): Promise<string[]> => {
       locations.map(({ location }) => location).filter(Boolean)
     );
 };
+
+type FormState = { error?: string } | undefined;
+
+export async function approveJobs(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const jobId = formData.get('jobId') as string;
+
+    const user = await auth();
+
+    if (!user) {
+      throw new Error('You are not authorized to perform this action');
+    }
+    if (user?.user.role !== 'ADMIN') {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    await prisma.job.update({
+      where: { id: jobId },
+      data: { approved: true },
+    });
+    revalidatePath('/');
+    revalidatePath('/dashboard/jobs');
+  } catch (error) {
+    let message = 'An error occurred. Please try again.';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return { error: message };
+  }
+}
+
+export async function deleteJobs(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const jobId = formData.get('jobId') as string;
+
+    const user = await auth();
+
+    if (!user) {
+      throw new Error('You are not authorized to perform this action');
+    }
+    if (user?.user.role !== 'ADMIN') {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    const job = await prisma.job.findUnique({
+      where: { id: jobId },
+    });
+
+    if (job?.companyLogo) {
+      const fileKey = job.companyLogo.split('/');
+      const imgToDelete = fileKey[fileKey.length - 1];
+      await utapi.deleteFiles(imgToDelete);
+    }
+
+    await prisma.job.delete({
+      where: { id: jobId },
+    });
+
+    revalidatePath('/dashboard/jobs');
+  } catch (error) {
+    let message = 'An error occurred. Please try again.';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return { error: message };
+  }
+  redirect('/dashboard/jobs');
+}

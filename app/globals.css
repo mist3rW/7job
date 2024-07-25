@@ -58,3 +58,14 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+@supports (height: 1lh) {
+  p:empty {
+    height: 1lh;
+  }
+}
+@supports not (height: 1lh) {
+  p:empty::after {
+    content: '\00A0';
+  }
+}

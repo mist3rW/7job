@@ -61,7 +61,7 @@ export default function JobResults({
             )}
           </div>
           <div className="w-2/3">
-            <div className="hidden md:flex items-center justify-center sticky top-0">
+            <div className="hidden md:flex items-center justify-center sticky top-0 rounded-lg overflow-hidden ">
               <JobItemContent job={activeJob} />
             </div>
           </div>

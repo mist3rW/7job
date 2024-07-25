@@ -30,24 +30,6 @@ export default function AuthCard({
         {children}
         {showSocial && <SocialLogin />}
       </CardContent>
-
-      <CardFooter className="flex justify-center items-center">
-        {page === 'signin' ? (
-          <>
-            Need to create an account?&nbsp;
-            <Link href="/auth/signup" className="text-blue-600">
-              Sign up
-            </Link>
-          </>
-        ) : (
-          <>
-            Already have an account?&nbsp;
-            <Link href="/auth/signin" className="text-blue-600">
-              Sign in
-            </Link>
-          </>
-        )}
-      </CardFooter>
     </Card>
   );
 }

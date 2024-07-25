@@ -24,10 +24,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { jobFilterAction } from '@/server/actions/job-action';
 import { duration_types } from '@/lib/duration-types';
-
-import { useEffect, useState } from 'react';
-import LocationInput from '../ui/location-input';
-import { X } from 'lucide-react';
 import LocationSuggestInput from './location-suggest-input';
 
 type JobFilterProps = {

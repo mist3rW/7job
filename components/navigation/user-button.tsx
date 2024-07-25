@@ -73,14 +73,14 @@ export default function UserButton({ user }: Session) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => router.push('/dashboard/settings')}
+          onClick={() => router.push('/dashboard/jobs')}
           className="group py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out"
         >
           <Settings
             size={14}
             className="mr-2 group-hover:rotate-180 transition-all duration-300 ease-in-out"
           />
-          Settings
+          Dashboard
         </DropdownMenuItem>
         {theme && (
           <DropdownMenuItem className="py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out">

@@ -40,3 +40,5 @@ export const jobFilterSchema = z.object({
 });
 
 export type TJobFilterSchema = z.infer<typeof jobFilterSchema>;
+
+export const approveDeleteJobSchema = z.object({ id: z.string() });
