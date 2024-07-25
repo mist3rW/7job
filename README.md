@@ -72,8 +72,12 @@ npm run dev
 
 Create a .env file in the root directory and add the following environment variables:
 
+if you would like the full authentication system with email verification, password recovery, 2-factor authentication, you may find my 7authOTP repository [here](https://github.com/mist3rW/7authOTP)
+
 ```
 DATABASE_URL="your_database_url"
+NEXTAUTH_SECRET="your_nextauth_secret"
+RESEND_API_KEY="your_resend_api_key"
 UPLOADTHING_SECRET="your_uploadthing_secret"
 UPLOADTHING_APP_ID="your_uploadthing_app_id"
 ```
