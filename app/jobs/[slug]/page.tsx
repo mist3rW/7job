@@ -1,12 +1,6 @@
-'use server';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { daysAgo, formatSalary } from '@/lib/utils';
 import prisma from '@/server/db';
-
-import { Banknote, Briefcase, Clock, MapPinned } from 'lucide-react';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import SingleJob from './single-job';
@@ -18,14 +12,6 @@ const getJob = cache(async (slug: string) => {
   if (!job) notFound();
   return job;
 });
-
-export async function generateStaticParams() {
-  const jobs = await prisma.job.findMany({
-    where: { approved: true },
-    select: { slug: true },
-  });
-  return jobs.map(({ slug }) => slug);
-}
 
 export async function generateMetadata({
   params: { slug },
