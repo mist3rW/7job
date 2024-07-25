@@ -1,11 +1,9 @@
 export default function Logo() {
   return (
     <svg
-      width="120"
-      height="55"
-      viewBox="0 0 454.901 75.201"
+      viewBox="0 0 280 100"
       xmlns="http://www.w3.org/2000/svg"
-      className="fill-secondary-foreground hover:fill-secondary-foreground/75 transition-all duration-500 ease-in-out cursor-pointer "
+      className="logo-svg fill-secondary-foreground hover:fill-secondary-foreground/75 transition-all duration-500 ease-in-out cursor-pointer "
     >
       <g
         id="svgGroup"
