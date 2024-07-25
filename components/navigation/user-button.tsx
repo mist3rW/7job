@@ -20,7 +20,7 @@ import { signOutUser } from '@/server/actions/auth-action';
 
 export default function UserButton({ user }: Session) {
   const { theme, setTheme } = useTheme();
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const router = useRouter();
 
   function setSwitchState() {
