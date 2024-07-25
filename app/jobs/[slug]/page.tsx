@@ -7,15 +7,14 @@ import { Banknote, Briefcase, Clock, MapPinned } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { cache } from 'react';
 
-const getJob = cache(async (slug: string) => {
+async function getJob(slug: string) {
   const job = await prisma.job.findUnique({
     where: { slug },
   });
   if (!job) notFound();
   return job;
-});
+}
 
 export async function generateStaticParams() {
   const jobs = await prisma.job.findMany({
