@@ -24,40 +24,46 @@ export default function BookmarkMenu() {
         bookmarks
         <ChevronDown size={10} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="h-96 overflow-auto">
+      <DropdownMenuContent className="max-h-96 overflow-auto">
         <DropdownMenuLabel>Saved jobs</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {bookmarks.map((bookmark) => (
-          <DropdownMenuItem key={bookmark.slug} className="w-[300px]">
-            <Link href={`/jobs/${bookmark.slug}`} className="w-full">
-              <div className="flex gap-2 w-full">
-                <div className="w-[55px] h-[55px] rounded-md bg-muted flex justify-center items-center font-bold">
-                  {bookmark.company.slice(0, 2).toUpperCase()}
-                </div>
-                <div className="text-sm flex flex-col py-1 justify-between w-full">
-                  <div className="flex justify-between w-full">
-                    <p className="font-bold">{bookmark.title}</p>
-                    <BookmarkIcon
-                      title={bookmark.title}
-                      company={bookmark.company}
-                      slug={bookmark.slug}
-                      size="16"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-secondary-foreground italic">
-                      {bookmark.company}
-                    </p>
-                    <p className="text-[10px]">
-                      Saved&nbsp;{daysAgo(bookmark.save)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <Separator className="w-full" />
-            </Link>
+        {bookmarks.length === 0 ? (
+          <DropdownMenuItem className="p-4">
+            you don&apos;t have any saved jobs yet
           </DropdownMenuItem>
-        ))}
+        ) : (
+          bookmarks.map((bookmark) => (
+            <DropdownMenuItem key={bookmark.slug} className="w-[300px]">
+              <Link href={`/jobs/${bookmark.slug}`} className="w-full">
+                <div className="flex gap-2 w-full">
+                  <div className="w-[55px] h-[55px] rounded-md bg-muted flex justify-center items-center font-bold">
+                    {bookmark.company.slice(0, 2).toUpperCase()}
+                  </div>
+                  <div className="text-sm flex flex-col py-1 justify-between w-full">
+                    <div className="flex justify-between w-full">
+                      <p className="font-bold">{bookmark.title}</p>
+                      <BookmarkIcon
+                        title={bookmark.title}
+                        company={bookmark.company}
+                        slug={bookmark.slug}
+                        size="16"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="text-secondary-foreground italic">
+                        {bookmark.company}
+                      </p>
+                      <p className="text-[10px]">
+                        Saved&nbsp;{daysAgo(bookmark.save)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <Separator className="w-full" />
+              </Link>
+            </DropdownMenuItem>
+          ))
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

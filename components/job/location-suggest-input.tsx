@@ -62,15 +62,15 @@ export default function LocationSuggestInput({
         value={locationSearchInput}
         onChange={handleInputChange}
         onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // Delay hiding to allow click event to register
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
       />
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1">
+        <div className="absolute z-10 w-full bg-primary-foreground border border-gray-300 rounded mt-1">
           {suggestions.map((location, index) => (
             <div
               key={index}
               className="p-2 cursor-pointer hover:bg-gray-200"
-              onMouseDown={() => handleSelectSuggestion(location)} // Use onMouseDown to handle selection before blur
+              onMouseDown={() => handleSelectSuggestion(location)}
             >
               {location}
             </div>

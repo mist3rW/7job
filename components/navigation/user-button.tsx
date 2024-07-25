@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { LogOut, Moon, Router, Settings, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch } from '../ui/switch';
 import { useRouter } from 'next/navigation';
 import { signOutUser } from '@/server/actions/auth-action';
@@ -33,6 +33,10 @@ export default function UserButton({ user }: Session) {
         return setChecked(false);
     }
   }
+
+  useEffect(() => {
+    setSwitchState();
+  }, []);
 
   return (
     <DropdownMenu>
