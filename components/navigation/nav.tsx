@@ -10,7 +10,7 @@ export default async function Nav() {
   const session = await auth();
 
   return (
-    <header className="p-4 ">
+    <header className="p-4 sticky top-0 z-10 bg-primary-foreground shadow-sm rounded-t-lg">
       <nav className="">
         <ul className="flex justify-between items-center ">
           <li className="">
@@ -38,7 +38,7 @@ export default async function Nav() {
               </Button>
             </li>
           ) : (
-            <li className="space-x-2 shrink-0">
+            <li className="space-x-2 shrink-0 flex">
               <BookmarkMenu />
               <Button asChild>
                 <Link
